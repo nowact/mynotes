@@ -30,3 +30,11 @@ tags:
    Pass arg to the linker.
    传入参数给连接器(ld)
 
+-isysroot <dir>
+   Set the system root directory (usually /)
+
+-iquote <directory>
+   Add directory to QUOTE include search path
+   增加引号方式包含头文件的查找目录
+
+
