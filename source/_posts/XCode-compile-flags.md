@@ -35,6 +35,9 @@ tags:
 
 -iquote <directory>
    Add directory to QUOTE include search path
-   增加引号方式包含头文件的查找目录
+   增加引号方式(#include "")包含头文件的查找目录
+
+-include <filename> 
+   相当于执行编译之前, 在源文件中增加一个#include <filename>
 
 
