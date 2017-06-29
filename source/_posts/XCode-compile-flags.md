@@ -28,7 +28,7 @@ tags:
 
 -Xlinker <arg>
    Pass arg to the linker.
-   传入参数给连接器(ld)
+   传入参数给链接器(ld)
 
 -isysroot <dir>
    Set the system root directory (usually /)
