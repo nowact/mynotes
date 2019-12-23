@@ -8,7 +8,6 @@ python import
    导入整个模块
 
 2. from module_name import attribute_name [as alias]
-
    from package_name.module_name import attribute_name [as alias]
 
    执行了正常的模块的导入过程，但是仅attribute_name在当前命名空间可见
@@ -24,7 +23,7 @@ python import
 #### 不推荐的用法
 1. import package_name
 
-   python默认不会自动导入一个包下的子模块，所以用如下的方式访问子模块会报错
+   python默认不会自动导入一个包下的子模块，所以用如下的方式访问子模块会报错
 
    package_name.module_name.attribute_name
    
