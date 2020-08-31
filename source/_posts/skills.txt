@@ -1,0 +1,63 @@
+克隆远程分支
+git checkout -b test <name of remote>/test
+
+git checout <tagname> //签出tag
+显示tag的commit id
+git show <tagname>
+
+git commit --amend //向最近的commit追加提交内容
+
+git diff --staged //查看stage中的修改
+
+git checkout <path/filename> //丢弃某个文件的修改
+
+git add <path> //添加文件到index
+git reset <path> // is the opposite of git add <path>
+
+
+GDB
+info symbol <函数名> //查看函数所在的可执行文件/动态库 
+info sharedlibrary   //显示被加载的动态库列表
+thread <线程id>      //切换到线程<id>
+thread              //显示当前线程的id
+set print object on //print object's derived type based on vtable info
+set args <参数列表>  //设置被调试进程的启动参数。比如 set args -n 10
+show args           //显示被调试进程的启动参数
+
+Linux
+查看正在运行的进程加载的动态库列表
+cat /proc/<pid>/maps
+
+#查看程序的RUNPATH
+readelf -d clangd | head -20
+
+vim
+
+make distclean  # if you build Vim before
+
+./configure --prefix=/home/wangzhiguang/devtools/vimhome
+
+./configure --with-features=huge \
+            --enable-multibyte \
+            --enable-python3interp=yes \
+            --with-python3-config-dir=$(python3-config --configdir) \
+            --enable-cscope \
+            --prefix=/home/wangzhiguang/devtools/vimhome
+
+./configure --with-features=huge \
+            --enable-multibyte \
+            --enable-pythoninterp=yes \
+            --with-python-config-dir=/lib64/python2.7/config \
+            --enable-cscope \
+            --prefix=/home/wangzhiguang/devtools/vimhome
+
+--with-python-config-dir=/lib64/python2.7/config
+
+make
+sudo make install
+
+创建tags文件
+ctags -R include/ src/
+
+//查询安装包安装的文件
+repoquery -l <package-name>
