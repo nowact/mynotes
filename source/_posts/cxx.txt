@@ -34,3 +34,26 @@ for (pt::ptree::value_type v : ptree_node) {
 解析JSON
 read_json()  //如果解析的过程出错会抛异常json_parser_error
 write_json() //如果property tree不能用json表示会抛异常json_parser_error
+
+
+C++11 变量初始化
+
+brace initialization, sometimes called uniform initialization
+
+int width{ 5 } //direct brance initialization
+int width{} //zero initialization, generally initializes the variable to zero (or empty)
+int width{ 4.5 } //error: brance initialization disallow narrowing conversion
+
+数组初始化
+int foo[]{ 10, 20, 30 } //创建一个长度为3的数组，并初始化
+std::vector<int> vec{ 7, 8, 9}
+
+字符数组初始化
+char a_string[]{ "hello" } //a_string is an array of length 6, with a null terminator
+const char *p_string{ "hello" } //p_string is a pointer
+
+in-class member initialize(non-static member initialization)
+class Rectangle {
+    double _length{ 1. 0};
+    double _width{ 1. 0};
+}
