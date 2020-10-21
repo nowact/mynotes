@@ -26,3 +26,23 @@
 虚值期权的内在价值小于0
 平值期权的内在价值等于0
 
+
+现货竞价交易
+风控合规检查：账户、权限、资金等
+成交资金冻结/费用扣除
+订单/成交回报
+
+
+金融行业常用协议
+FIX
+Financial Information eXchange protocol 
+
+FAST
+FIX Adapted For Streaming
+为了解决FIX协议传输市场数据存在的冗余度高，带宽需求大的问题，
+FAST对FIX数据压缩，有效减少数据冗余。
+
+STEP - Security Trade Exchange Protocol
+国家金融行业标准,它是我国根据FIX协议4.4版本的基础上制定出来的，已成为事实上的证券数据标准，语法简单定义灵活易扩展，数据相对冗余。
+
+Binary - 深交所自己定的二进制格式的协议

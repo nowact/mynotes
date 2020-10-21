@@ -1,3 +1,14 @@
+如何写好代码
+业务逻辑正确
+运行高效
+开发维护效率高：
+   设计模式
+   对修改封闭、扩展开放
+   减少代码重复
+   减少耦合依赖
+   多用const修饰
+   函数行数不要超过200行
+
 boost
 
 Conceptually, then, a node can be thought of as the following structure:
@@ -57,3 +68,6 @@ class Rectangle {
     double _length{ 1. 0};
     double _width{ 1. 0};
 }
+
+
+公司用的gcc版本是4.8.5

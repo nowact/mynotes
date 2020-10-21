@@ -12,7 +12,7 @@ git diff --staged //查看stage中的修改
 git checkout <path/filename> //丢弃某个文件的修改
 
 git add <path> //添加文件到index
-git reset <path> // is the opposite of git add <path>
+git reset <path> // is the opposite of git add <path>。
 
 git rm --cache <path> //rm file from index, 可以用于解除git对文件的控制
 
@@ -30,6 +30,18 @@ set print object on //print object's derived type based on vtable info
 set args <参数列表>  //设置被调试进程的启动参数。比如 set args -n 10
 gdb --args program arg1 arg2 ... //在命令行里指定被调试程序的启动参数
 show args           //显示被调试进程的启动参数
+
+#打印所有线程的堆栈信息到bt_output.txt
+gdb /home/archforce/ATP/bin/agw core.7906 -ex 'thread apply all bt' -ex quit |& tee bt_output.txt
+
+#运行时打印所有异常抛出时的堆栈
+set pagination off
+catch throw
+commands
+backtrace
+continue
+end
+run/continue
 
 Linux
 查看正在运行的进程加载的动态库列表
