@@ -70,4 +70,7 @@ class Rectangle {
 }
 
 
-公司用的gcc版本是4.8.5
+公司用的gcc版本是4.8.5，release编译时用的参数是
+-O3 -g -fPIC -std=c++11 -ftemplate-depth-128
+
+CentOS 7.2
