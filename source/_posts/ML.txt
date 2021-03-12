@@ -1,0 +1,11 @@
+
+matplotlib
+Axes3D.scatter(x, y, z)
+同一组数据集(a, b, c)选择不同的顺序作为x, y, z绘制的3D散点图的视觉效果差异很大，
+有的能明显看出规律，有的不能，所以使用3D散点图时应该绘制所有的组合后观察
+a, b, c
+a, c, b
+b, a, c
+b, c, a
+c, a, b
+c, b, a

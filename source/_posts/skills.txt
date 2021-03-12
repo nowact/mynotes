@@ -16,9 +16,29 @@ git reset <path> // is the opposite of git add <path>。
 
 git rm --cache <path> //rm file from index, 可以用于解除git对文件的控制
 
+git push <origin> --delete <branch_name> // 删除远程分支
+git push --set-upstream <origin> <branch_name> // 推送在本地创建的分支到远程
 
 git log -p [commit-id] //显示文件变化内容
 git log --stat //显示变化文件列表
+git log --all --decorate --oneline --graph
+
+
+git config --global log.decorate auto # 修改全局配置
+git config --global alias.logg "log --all --decorate --oneline --graph" # 定义命令别名
+
+git submodule update # 更新submodule到其指定的commit
+cd submodule_dir && git pull origin master # 更新submodule到远程最新
+
+//合并最近3个commit
+1. 
+git rebase -i HEAD~3
+2. 编辑弹出的命令
+pick commit1
+squash commit2
+squash commit3
+3. 编辑合并后的提交message
+
 
 
 GDB
@@ -68,13 +88,14 @@ readelf -Ws libz.so
 解析c++的类名
 c++filt <符号名> //Demangle C++ and Java symbols
 
-
-
-
 top -H -p <pid> 查看进程中的线程列表
 gstack/pstack <LWP thread id> //打印线程的堆栈 
 strace //system call trace
 ltrace //library call trace
+
+
+tcpdump -i lo -n -X -vvv 'tcp port 12346 and (tcp[tcpflags] & (tcp-syn|tcp-fin) != 0)'
+
 
 vim
 
@@ -101,9 +122,63 @@ make distclean  # if you build Vim before
 make
 sudo make install
 
+~/.vim/vimrc
+set number
+set hlsearch
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set autoindent
+
+set cursorline
+
 创建tags文件
 ctags -R include/ src/
+
+生成clangd需要的compile_commands.json
+cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ..
+ln -s ~/myproject/compile_commands.json ~/myproject-build/
+
 
 //查询安装包安装的文件
 repoquery -l <package-name>
 
+# build boost
+sudo apt install pkgconf
+sudo apt install libicu-dev
+
+./bootstrap.sh --prefix=/home/username/usr/local --with-libraries=filesystem,regex,program_options,test
+./b2
+./b2 install
+
+Ubuntu
+dpkg-query -L <package-name> # 查看已安装的包的文件列表
+apt-file list <package-name> # 查看未安装的包的文件列表
+dpkg -l <package-name> # 显示package是否被安装
+
+
+# linux-perf
+
+测量程序热点
+gcc -g3 main.cpp # perf annotate 需要-g3的调试信息
+perf record ./a.out
+perf annotate
+
+统计并显示主要性能计数器
+perf stat ./a.out
+
+# lcov
+mkdir lcov_output
+lcov --directory build -capture --output-file lcov_output/app.info --rc lcov_branch_coverage=1
+cd lcov_output && genhtml --branch-coverage app.info --rc lcov_branch_coverage=1
+
+# gcovr
+cd ~/projects/ATS-dev/build
+make && ./a.out
+mkdir gcovr
+gcovr -r ~/projects/ATS-dev/ --html --html-details --exclude-unreachable-branches --exclude-throw-branches -o gcovr/coverage.html .
+
+
+## python conda
+# 安装指定渠道的包
+conda install -c conda-forge scikit-plot

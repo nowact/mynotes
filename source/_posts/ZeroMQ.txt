@@ -1,0 +1,39 @@
+1. “in ZeroMQ, all your sockets are belong to us”, but messages are things you actually own in your code.
+   应用程序负责管理消息对象的生命周期
+   
+2. ZeroMQ does asynchronous I/O, i.e., in the background. 
+
+
+3. 发送队列满时
+
+发送队列满时，ZMQ_PUB类型的socket会丢弃消息
+
+When a ZMQ_PUB socket enters the mute state due to having reached the high water mark for a subscriber, then any messages that would be sent to the subscriber in question shall instead be dropped until the mute state ends. The zmq_send() function shall never block for this socket type.
+
+发送队列满时，ZMQ_PUSH类型的socket会阻塞
+
+When a ZMQ_PUSH socket enters the mute state due to having reached the high water mark for all downstream nodes, or if there are no downstream nodes at all, then any zmq_send(3) operations on the socket shall block until the mute state ends or at least one downstream node becomes available for sending; messages are not discarded.
+
+4. 关闭socket和context
+
+zmq_ctx_term()让阻塞中的zmq_msg_recv()/zmq_msg_send()返回,
+然后zmq_ctx_term()自己会阻塞等待：
+    1. socket被zmq_close()
+	2. 队列中的消息被发送到网络
+	
+## zmq_ctx_term()
+The zmq_ctx_term() function shall destroy the ØMQ context context.
+
+Context termination is performed in the following steps:
+
+Any blocking operations currently in progress on sockets open within context shall return immediately with an error code of ETERM. With the exception of zmq_close(), any further operations on sockets open within context shall fail with an error code of ETERM.
+After interrupting all blocking calls, zmq_ctx_term() shall block until the following conditions are satisfied:
+All sockets open within context have been closed with zmq_close().
+For each socket within context, all messages sent by the application with zmq_send() have either been physically transferred to a network peer, or the socket's linger period set with the ZMQ_LINGER socket option has expired.
+
+## zmq_close()
+The zmq_close() function shall destroy the socket referenced by the socket argument. Any outstanding messages physically received from the network but not yet received by the application with zmq_recv() shall be discarded. The behaviour for discarding messages sent by the application with zmq_send() but not yet physically transferred to the network depends on the value of the ZMQ_LINGER socket option for the specified socket.
+
+zmq_close() must be called exactly once for each socket. If it is never called, zmq_ctx_term() will block forever. If it is called multiple times for the same socket or if socket does not point to a socket, the behaviour is undefined.
+
+

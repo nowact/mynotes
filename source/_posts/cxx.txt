@@ -70,7 +70,20 @@ class Rectangle {
 }
 
 
+# memory order
+对于一个std::atomic变量，所有memory order类型(包括memory_order_relaxed)的读写操作都是原子的。
+memory order用于控制编译器和CPU的乱序行为，不会影响原子变量本身的原子性。
+memory_order_acquire之后的代码不能被乱序到其之前执行，典型的应用为实现mutex的lock。
+memory_order_release之前的代码不能被乱序到其之后执行，典型的应用为实现mutex的unlock。
+memory_order_relaxed对其上下文的代码无乱序限制，编译器或CPU可以执行任意乱序优化。
+
+在强顺序平台(比如x86/64CPU)，数据访问默认具有acquire-release语义，此时在代码中
+指定memory_order_relaxed，主要是限制编译器的优化行为。
+
+
 公司用的gcc版本是4.8.5，release编译时用的参数是
 -O3 -g -fPIC -std=c++11 -ftemplate-depth-128
 
 CentOS 7.2
+
+
