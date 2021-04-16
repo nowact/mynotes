@@ -158,14 +158,28 @@ dpkg -l <package-name> # 显示package是否被安装
 
 
 # linux-perf
+Build
+下载内核版本对应的源码
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/snapshot/linux-4.4.tar.gz
+cd linux-4.4/tools/perf
+LDFLAGS=-static make
+查看make的依赖库检查输出，安装缺少的依赖库，否则即使编译通过，功能也不完善
+
+sudo apt-get install elfutils libelf-dev libdw-dev libaudit-dev liblzma-dev
 
 测量程序热点
 gcc -g3 main.cpp # perf annotate 需要-g3的调试信息
 perf record ./a.out
 perf annotate
 
-统计并显示主要性能计数器
+统计并显示主要性能计数器: 分支预测
 perf stat ./a.out
+
+查看cache miss
+perf stat -B -e cache-references,cache-misses
+
+sudo perf report -g --no-children 
+
 
 # lcov
 mkdir lcov_output
