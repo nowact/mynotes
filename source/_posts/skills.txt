@@ -53,6 +53,7 @@ show args           //显示被调试进程的启动参数
 
 #打印所有线程的堆栈信息到bt_output.txt
 gdb /home/archforce/ATP/bin/agw core.7906 -ex 'thread apply all bt' -ex quit |& tee bt_output.txt
+gdb ./jingle_main 27499 -ex 'thread apply all bt' -ex quit |& tee bt_output.txt
 
 #运行时打印所有异常抛出时的堆栈
 set pagination off
@@ -62,6 +63,11 @@ backtrace
 continue
 end
 run/continue
+
+#打印输出到文件
+set logging file gdb_output.txt
+set logging on
+show logging
 
 Linux
 查看正在运行的进程加载的动态库列表
@@ -136,8 +142,9 @@ set cursorline
 ctags -R include/ src/
 
 生成clangd需要的compile_commands.json
+cd myproject/build
 cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ..
-ln -s ~/myproject/compile_commands.json ~/myproject-build/
+ln -s myproject/build/compile_commands.json ~/myproject/
 
 
 //查询安装包安装的文件
@@ -155,7 +162,12 @@ Ubuntu
 dpkg-query -L <package-name> # 查看已安装的包的文件列表
 apt-file list <package-name> # 查看未安装的包的文件列表
 dpkg -l <package-name> # 显示package是否被安装
+dpkg -S <filename> 搜索包含文件<filename>的软件包
 
+修改coredump文件名
+vim /etc/sysctl.conf
+kernel.core_pattern = %e-%p.core
+sysctl -p
 
 # linux-perf
 Build
@@ -196,3 +208,10 @@ gcovr -r ~/projects/ATS-dev/ --html --html-details --exclude-unreachable-branche
 ## python conda
 # 安装指定渠道的包
 conda install -c conda-forge scikit-plot
+
+
+# 磁盘写入测速
+# tmp.data 为6G
+dd if=/dev/zero of=tmp.data oflag=direct bs=64k count=100K
+
+
